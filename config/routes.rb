@@ -9,7 +9,9 @@ Rails.application.routes.draw do
     get '/current' => 'users#current'
     resources :users
     resources :courses do
-      resources :comments
+      resources :comments do 
+        post 'vote'
+      end
     end
   end
 end
