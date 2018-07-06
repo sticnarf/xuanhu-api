@@ -8,5 +8,8 @@ Rails.application.routes.draw do
     post '/reg' => 'users#create'
     get '/current' => 'users#current'
     resources :users
+    resources :courses do
+      resources :comments
+    end
   end
 end
