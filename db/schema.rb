@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_04_172940) do
+ActiveRecord::Schema.define(version: 2018_07_06_062705) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,13 @@ ActiveRecord::Schema.define(version: 2018_07_04_172940) do
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "department_id"
+  end
+
+  create_table "departments", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -42,13 +49,29 @@ ActiveRecord::Schema.define(version: 2018_07_04_172940) do
     t.index ["token"], name: "index_sessions_on_token", unique: true
   end
 
+  create_table "teachers", force: :cascade do |t|
+    t.string "name"
+    t.text "intro"
+    t.integer "department_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "teachers_courses", id: false, force: :cascade do |t|
+    t.bigint "teachers_id"
+    t.bigint "courses_id"
+    t.index ["courses_id"], name: "index_teachers_courses_on_courses_id"
+    t.index ["teachers_id"], name: "index_teachers_courses_on_teachers_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email"
     t.string "password_digest"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "is_teacher"
+    t.boolean "is_teacher", default: false
     t.string "avatar_url"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
