@@ -16,14 +16,14 @@ class UsersController < ApplicationController
   def update
     user_params = params.permit(:name, :avatar_url)
     if current_user.update_attributes(user_params)
-      render json: current_user, except: [:password_digest]
+      render json: current_user
     else
       render json: current_user.errors, status: 422
     end
   end
 
   def current
-    render json: current_user, except: [:password_digest]
+    render json: current_user
   end
 
   private
