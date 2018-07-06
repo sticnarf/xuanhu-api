@@ -22,6 +22,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def comments
+    # comments = Comment.where(user_id: current_user, parent_id: nil).order(created_at: :desc).limit(10)
+    # render json: (comments.map do |c| 
+    #   j = c.as_json
+    #   j[:course] = c.course
+    #   j
+    # end)
+  end
+
   def current
     render json: current_user
   end

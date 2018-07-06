@@ -7,7 +7,10 @@ Rails.application.routes.draw do
     post '/logout' => 'sessions#delete'
     post '/reg' => 'users#create'
     get '/current' => 'users#current'
-    resources :users
+    get '/latest' => 'comments#latest'
+    resources :users do
+      get 'comments'
+    end
     resources :courses do
       resources :comments do 
         post 'vote'

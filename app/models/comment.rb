@@ -45,9 +45,10 @@ class Comment < ApplicationRecord
 
   def recursive_json(user_id)
     all = self_and_descendents
-    all_votes = Vote.where(comment_id: { in: all.map { |c| c[:id] } })
-                    .group_by { |v| v[:id] }
+    all_votes = Vote.where('user_id = ? AND comment_id in (?)', user_id, all.map { |c| c[:id] })
+                    .group_by { |v| v[:comment_id] }
                     .transform_values! { |v| v.first[:value] }
+    # p all_votes
     gi = all.group_by { |c| c[:id] }.transform_values! do |c|
       obj = c.first.as_json
       obj['voteValue'] = (all_votes[obj['id']] || 0)

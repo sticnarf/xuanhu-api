@@ -54,4 +54,13 @@ class CommentsController < ApplicationController
       render json: { success: false }, status: 422
     end
   end
+
+  def latest
+    comments = Comment.where(parent_id: nil).order(created_at: :desc).limit(10)
+    render json: (comments.map do |c| 
+      j = c.as_json
+      j[:course] = c.course
+      j
+    end)
+  end
 end
