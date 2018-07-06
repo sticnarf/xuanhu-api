@@ -4,6 +4,7 @@ class Comment < ApplicationRecord
   has_many :child_comments, class_name: 'Comment', foreign_key: :parent_id
   has_many :votes
   belongs_to :parent_comment, class_name: 'Comment', optional: true
+  validates_uniqueness_of :user_id, :scope => [:course_id, :parent_id]
 
   def parent_comment_id
     parent_id

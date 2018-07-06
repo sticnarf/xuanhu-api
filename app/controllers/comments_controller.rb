@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :require_login, only: [:create, :vote]
+  before_action :require_login, only: [:create, :vote, :delete]
 
   def create
     comment_params = params.permit(:course_id, :content, :parent_id)
@@ -15,6 +15,17 @@ class CommentsController < ApplicationController
   def index
     root = Comment.where(course_id: params[:course_id], parent_id: nil)
     render json: root.map { |c| c.recursive_json(current_user&.id) }
+  end
+
+  def delete
+    comment = Comment.find_by(id: params[:id])
+    if current_user.id != comment.user_id
+      render json: { success: false }, status: 403
+    elsif comment.delete
+      render json: { success: true }
+    else
+      render json: { success: false }, status: 422
+    end 
   end
 
   def vote
