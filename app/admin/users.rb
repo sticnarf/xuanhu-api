@@ -11,7 +11,7 @@ ActiveAdmin.register User do
 #     column :created_at
 #     actions
 #   end
-  permit_params [:name, :avatar_url, :teacher_id]
+  permit_params [:name, :avatar_url, :teacher_id, :description]
 #
 # or
 #

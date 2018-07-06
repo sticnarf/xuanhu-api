@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_06_153737) do
+ActiveRecord::Schema.define(version: 2018_07_06_160336) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(version: 2018_07_06_153737) do
     t.boolean "is_teacher", default: false
     t.string "avatar_url"
     t.integer "teacher_id"
+    t.text "description"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

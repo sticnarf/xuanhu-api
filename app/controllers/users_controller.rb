@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    user_params = params.permit(:name, :avatar_url)
+    user_params = params.permit(:name, :avatar_url, :description)
     if current_user.update_attributes(user_params)
       render json: current_user
     else
