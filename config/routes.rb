@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     post '/reg' => 'users#create'
     get '/current' => 'users#current'
     get '/latest' => 'comments#latest'
+    post '/search' => 'courses#search'
     resources :users do
       get 'comments'
     end
