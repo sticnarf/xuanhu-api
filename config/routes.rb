@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     post '/search' => 'courses#search'
     resources :users do
       get 'comments'
+      get 'votes'
+      post 'upload'
     end
     resources :courses do
       resources :comments do 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_06_180051) do
+ActiveRecord::Schema.define(version: 2018_07_10_131306) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -116,7 +116,7 @@ ActiveRecord::Schema.define(version: 2018_07_06_180051) do
     t.datetime "updated_at", null: false
     t.string "avatar_url"
     t.integer "teacher_id"
-    t.text "description"
+    t.text "description", default: ""
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
