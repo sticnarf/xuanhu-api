@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_10_131306) do
+ActiveRecord::Schema.define(version: 2018_07_11_124958) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -72,9 +72,10 @@ ActiveRecord::Schema.define(version: 2018_07_10_131306) do
     t.string "course_type"
   end
 
-  create_table "courses_teachers", id: false, force: :cascade do |t|
+  create_table "courses_teachers", force: :cascade do |t|
     t.bigint "teacher_id", null: false
     t.bigint "course_id", null: false
+    t.index ["course_id", "teacher_id"], name: "index_courses_teachers_on_course_id_and_teacher_id", unique: true
   end
 
   create_table "departments", force: :cascade do |t|

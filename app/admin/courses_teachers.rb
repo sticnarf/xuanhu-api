@@ -1,8 +1,8 @@
-ActiveAdmin.register Course do
+ActiveAdmin.register CoursesTeacher do
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
 #
-  permit_params :title, :intro, :course_type, :department_id, :teachers
+# permit_params :list, :of, :attributes, :on, :model
 #
 # or
 #
@@ -11,5 +11,9 @@ ActiveAdmin.register Course do
 #   permitted << :other if params[:action] == 'create' && current_user.admin?
 #   permitted
 # end
-
+#   index do
+#     column :teacher_id
+#     column :course_id
+#     actions
+#   end
 end

@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       post 'upload'
     end
     resources :courses do
+      put 'teachers'
       resources :comments do 
         post 'vote'
       end

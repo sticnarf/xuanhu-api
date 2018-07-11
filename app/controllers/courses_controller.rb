@@ -21,4 +21,16 @@ class CoursesController < ApplicationController
       c.slice('id', 'title', 'teachers', 'course_type', 'department', 'intro')
     end)
   end
+
+  def teachers
+    p params
+    course = Course.find_by(id: params[:course_id])
+    teachers = Teacher.where('name in (?)', params[:names])
+    course.teachers = teachers
+    if course.save
+      render json: course
+    else
+      render json: { success: false }, status: 422
+    end
+  end
 end

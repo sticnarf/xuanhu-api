@@ -62,3 +62,5 @@ gem 'draper'
 gem 'pundit'
 
 gem 'pg_search'
+gem 'aliyun-sdk'
+gem 'dotenv-rails'

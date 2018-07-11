@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :require_login, only: [:current]
-  before_action :require_self, only: [:update]
+  before_action :require_self, only: [:update, :upload]
 
   def create
     user_params = params.permit(:email, :name, :password)
@@ -61,6 +61,15 @@ class UsersController < ApplicationController
 
   def upload
     p params
+    client = OSS.client
+    bucket = client.get_bucket('xuanhu-avatar')
+    key = Base64.urlsafe_encode64(current_user.email, padding: false)
+    if bucket.put_object(key, :file => params[:avatar].path)
+      current_user.update_attribute('avatar_url', "#{bucket.bucket_url}#{key}")
+      render json: { success: true, url: current_user.avatar_url }
+    else
+      render json: { success: false }, status: 422
+    end
   end
 
   def current
@@ -69,7 +78,8 @@ class UsersController < ApplicationController
 
   private
   def require_self
-    if current_user&.id&.to_s != params[:id]
+    cid = current_user&.id&.to_s
+    if cid != params[:id] and cid != params[:user_id]
       render json: { success: false }, status: 403
     end
   end
