@@ -4,6 +4,9 @@ ENV RAILS_ENV='production'
 ENV RAKE_ENV='production'
 ENV RAILS_SERVE_STATIC_FILES='YES'
 
+
+RUN sed -i 's|security.debian.org/debian-security|mirrors.ustc.edu.cn/debian-security|g' /etc/apt/sources.list
+RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev git curl 
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install -y nodejs
