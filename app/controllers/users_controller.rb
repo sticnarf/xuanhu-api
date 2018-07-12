@@ -52,7 +52,7 @@ class UsersController < ApplicationController
   end
 
   def votes
-    votes = Vote.where(user_id: params[:user_id]).order(updated_at: :desc)
+    votes = Vote.where('user_id = ? AND value != 0', params[:user_id]).order(updated_at: :desc)
     comments = Comment.where('id in (?) AND parent_id is null', votes.map { |v| v.comment_id } )
     values = votes.group_by { |v| v.comment_id }.transform_values! { |v| v.first.value }
     render json: (comments.map do |c|
