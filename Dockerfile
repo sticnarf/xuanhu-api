@@ -22,4 +22,5 @@ RUN bundle install
 COPY . /xuanhu-api
 RUN cp -r /XuanhuFE/build/* ./public/
 RUN bundle install
+RUN ruby cdn.rb
 RUN rake assets:precompile
