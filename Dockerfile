@@ -7,9 +7,10 @@ ENV RAILS_SERVE_STATIC_FILES='YES'
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev git curl 
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install -y nodejs
+RUN npm install -g cnpm --registry=https://registry.npm.taobao.org
 
 RUN git clone https://github.com/Bokjan/XuanhuFE.git --depth=1
-RUN cd XuanhuFE && npm install && npm run build 
+RUN cd XuanhuFE && cnpm install && cnpm run build 
 
 RUN mkdir /xuanhu-api
 COPY Gemfile /xuanhu-api/Gemfile
