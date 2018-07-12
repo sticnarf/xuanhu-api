@@ -23,11 +23,15 @@ class UsersController < ApplicationController
   end
 
   def update
-    user_params = params.permit(:name, :avatar_url, :description)
-    if current_user.update_attributes(user_params)
-      my_render json: current_user
+    if params[:password] && !current_user.authenticate(params[:old_password])
+      render json: { success: false }, status: 422
     else
-      render json: current_user.errors, status: 422
+      user_params = params.permit(:name, :avatar_url, :description, :password)
+      if current_user.update_attributes(user_params)
+        my_render json: current_user
+      else
+        render json: current_user.errors, status: 422
+      end
     end
   end
 

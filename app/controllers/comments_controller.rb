@@ -12,6 +12,18 @@ class CommentsController < ApplicationController
     end
   end
 
+  def update
+    comment_params = params.permit(:content)
+    comment = Comment.find_by(id: params[:id])
+    if current_user.id != comment.user_id
+      render json: { success: false }, status: 403
+    elsif comment.update_attributes(comment_params)
+      render json: { success: true }
+    else
+      render json: comment.errors, status: 422
+    end
+  end
+
   def index
     root = Comment.where(course_id: params[:course_id], parent_id: nil)
     render json: root.map { |c| c.recursive_json(current_user&.id) }
@@ -43,7 +55,7 @@ class CommentsController < ApplicationController
       v.value = params[:value]
     end
     status = comment.transaction do
-      v.save && comment.update_attributes(
+      v.save && comment.update_columns(
         voteUp: comment.voteUp + up,
         voteDown: comment.voteDown + down
       )
@@ -56,7 +68,8 @@ class CommentsController < ApplicationController
   end
 
   def latest
-    comments = Comment.where(parent_id: nil).order(created_at: :desc).limit(10)
+    comments = Comment.where(parent_id: nil).order(created_at: :desc)
+                      .page(params[:page]).per(5).without_count
     render json: (comments.map do |c| 
       j = c.as_json
       j[:course] = c.course
