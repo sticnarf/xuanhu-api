@@ -25,8 +25,9 @@ class CommentsController < ApplicationController
   end
 
   def index
-    root = Comment.where(course_id: params[:course_id], parent_id: nil).order('(voteUp - voteDown)')
-    render json: root.map { |c| c.recursive_json(current_user&.id) }
+    root = Comment.where(course_id: params[:course_id], parent_id: nil)
+    render json: root.sort_by { |c| c.voteDown - c.voteUp }
+                     .map { |c| c.recursive_json(current_user&.id) }
   end
 
   def delete
