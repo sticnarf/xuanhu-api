@@ -4,7 +4,7 @@ services:
     image: chenxinaz/zhparser
     restart: always
     volumes:
-      - pgdata:/var/lib/postgresql
+      - ./tmp/db:/var/lib/postgresql
   web:
     build: .
     entrypoint: [bin/entry]
@@ -13,5 +13,3 @@ services:
       - "3000:3000"
     depends_on:
       - db
-volumes: 
-     pgdata:

@@ -66,7 +66,7 @@ class UsersController < ApplicationController
   def upload
     p params
     client = OSS.client
-    bucket = client.get_bucket('xuanhu-avatar')
+    bucket = client.get_bucket(ENV['AVATAR_BUCKET'])
     key = Base64.urlsafe_encode64(current_user.email, padding: false)
     if bucket.put_object(key, :file => params[:avatar].path)
       current_user.update_attribute('avatar_url', "#{bucket.bucket_url}#{key}")
