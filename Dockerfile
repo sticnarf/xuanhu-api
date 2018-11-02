@@ -1,4 +1,4 @@
-FROM ruby:2.5
+FROM ruby:2.5.3
 
 ENV RAILS_ENV='production'
 ENV RAKE_ENV='production'
