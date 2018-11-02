@@ -9,6 +9,7 @@ RUN sed -i 's|security.debian.org/debian-security|mirrors.ustc.edu.cn/debian-sec
 RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev git curl 
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN sed -i 's/deb.nodesource.com\/node\//mirrors.tuna.tsinghua.edu.cn\/nodesource\/deb\//g' /etc/apt/sources.list
 RUN apt-get install -y nodejs
 RUN npm install -g cnpm --registry=https://registry.npm.taobao.org
 
